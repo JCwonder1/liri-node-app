@@ -1,25 +1,62 @@
 require("dotenv").config();
 
+
 var keys = require("./keys.js");
+var Spotify = require('node-spotify-api')
 
-//var spotify = new Spotify(keys.spotify);
+var spotify = new Spotify(keys.spotify);
 
-var welcomeMessage = "I am an app that will fetch you song, concert and movie data.  I can also fetch random data.  Use these commands: \n\n" +
+let welcomeMessage = "I am an app that will fetch you song, concert and movie data.  I can also fetch random data.  Use these commands: \n\n" +
     "concert-this then artist/band name here \n" +
     "spotify-this-song 'song name here'\n" +
     "movie-this 'movie name here'\n"+
     "do-what-it-says for random \n";
 
 //Setup question to ask the user
-var questions = [
+let questions = [
     "What would you like me to fetch?",
     "What would you like me to fetch next?"
 ];
 
+//Store users response
+var userResponse = "";
+
 console.log(welcomeMessage);
 
-//TODO: add a listener to the cmd to get data
-//TODO: add a switch to go through the data and run something
+process.stdin.on('data', data=> {
+    userResponse = data.toString().trim();
+
+    //Deconstruct the user response to pull out the call to action
+    let userAction = userResponse.split(" ");
+    userAction = userAction[0];
+
+    switch(userAction){
+        case (userAction = 'concert-this'):
+            console.log('In Concert This');
+            break
+        case (userAction = 'spotify-this-song'):
+            console.log('In Spotify This');
+            break
+        case (userAction = 'movie-this'):
+            console.log('In Movie This');
+            break
+        case (userAction = 'do-what-it-says'):
+            console.log('In do-what-it-says');
+            break
+        default:
+            console.log('Sorry I dont know that command.  Try again');
+            break
+
+    }
+    //console.log(userAction);
+
+    //console.log(userResponse.split(" "));
+    
+
+
+});
+
+
 //TODO: add seprate file to control spotify api call
 //TODO: add separate file to control bandsintown
 //TODO: add separate file to control OMDB
