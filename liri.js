@@ -24,29 +24,32 @@ var userResponse = "";
 console.log(welcomeMessage);
 
 process.stdin.on('data', data=> {
-    userResponse = data.toString().trim();
+    userResponse = data.toString().toLocaleLowerCase().trim();
 
     //Deconstruct the user response to pull out the call to action
-    let userAction = userResponse.split(" ");
-    userAction = userAction[0];
+    let userAction = userResponse.substr(0,userResponse.indexOf(' '));
+    if(userAction) {
+        switch (userAction) {
+            case (userAction = 'concert-this'):
+                console.log('In Concert This');
+                break
+            case (userAction = 'spotify-this-song'):
+                console.log('In Spotify This');
+                break
+            case (userAction = 'movie-this'):
+                console.log('In Movie This');
+                break
+            case (userAction = 'do-what-it-says'):
+                console.log('In do-what-it-says');
+                break
+            default:
+                console.log('Sorry I dont know that command.  Try again');
+                //console.log(userAction);
+                break
 
-    switch(userAction){
-        case (userAction = 'concert-this'):
-            console.log('In Concert This');
-            break
-        case (userAction = 'spotify-this-song'):
-            console.log('In Spotify This');
-            break
-        case (userAction = 'movie-this'):
-            console.log('In Movie This');
-            break
-        case (userAction = 'do-what-it-says'):
-            console.log('In do-what-it-says');
-            break
-        default:
-            console.log('Sorry I dont know that command.  Try again');
-            break
-
+        }
+    }else{
+        console.log("Please include something you want me to look up!")
     }
     //console.log(userAction);
 
