@@ -1,10 +1,6 @@
-require("dotenv").config();
 
 
-var keys = require("./keys.js");
-var Spotify = require('node-spotify-api')
-
-var spotify = new Spotify(keys.spotify);
+var spotifySearch = require('./spotify-request');
 
 let welcomeMessage = "I am an app that will fetch you song, concert and movie data.  I can also fetch random data.  Use these commands: \n\n" +
     "concert-this then artist/band name here \n" +
@@ -36,6 +32,7 @@ process.stdin.on('data', data=> {
             break
         case (userAction = 'spotify-this-song'):
             console.log('In Spotify This');
+            spotifySearch(userResponse);
             break
         case (userAction = 'movie-this'):
             console.log('In Movie This');
