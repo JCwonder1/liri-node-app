@@ -1,6 +1,10 @@
+require("dotenv").config();
 
 
-var spotifySearch = require('./spotify-request');
+var keys = require("./keys.js");
+var Spotify = require('node-spotify-api')
+
+var spotify = new Spotify(keys.spotify);
 
 let welcomeMessage = "I am an app that will fetch you song, concert and movie data.  I can also fetch random data.  Use these commands: \n\n" +
     "concert-this then artist/band name here \n" +
@@ -20,29 +24,42 @@ var userResponse = "";
 console.log(welcomeMessage);
 
 process.stdin.on('data', data=> {
-    userResponse = data.toString().trim();
+    userResponse = data.toString().toLocaleLowerCase().trim();
 
     //Deconstruct the user response to pull out the call to action
-    let userAction = userResponse.split(" ");
-    userAction = userAction[0];
+    let whatToLookup = userResponse.indexOf(' ') >=0 ? userResponse.substr(userResponse.indexOf(' ')) : false;
 
-    switch(userAction){
-        case (userAction = 'concert-this'):
-            console.log('In Concert This');
-            break
-        case (userAction = 'spotify-this-song'):
-            console.log('In Spotify This');
-            spotifySearch(userResponse);
-            break
-        case (userAction = 'movie-this'):
-            console.log('In Movie This');
-            break
-        case (userAction = 'do-what-it-says'):
-            console.log('In do-what-it-says');
-            break
-        default:
-            console.log('Sorry I dont know that command.  Try again');
-            break
+
+    let apiToFetch =  null;
+    if(userResponse.indexOf(' ') >=0 && whatToLookup !== false){
+                       apiToFetch = userResponse.substr(0,userResponse.indexOf(' '))
+    }else if(whatToLookup === false && userResponse === "exit"){
+        process.exit()
+    }
+
+
+    if(apiToFetch) {
+        switch (apiToFetch) {
+            case (apiToFetch = 'concert-this'):
+                console.log('In Concert This');
+                break
+            case (apiToFetch = 'spotify-this-song'):
+                console.log('In Spotify This');
+                break
+            case (apiToFetch = 'movie-this'):
+                console.log('In Movie This');
+                break
+            case (apiToFetch = 'do-what-it-says'):
+                console.log('In do-what-it-says');
+                break
+            default:
+                console.log('Sorry I dont know that command.  Try again');
+                //console.log(userAction);
+                break
+
+        }
+    }else{
+        console.log("Please include something you want me to look up!")
 
     }
     //console.log(userAction);
