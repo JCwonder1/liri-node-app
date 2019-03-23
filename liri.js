@@ -1,6 +1,7 @@
 require("dotenv").config();
 var spotifySearch = require('./spotify-request');
 var bandsInTownSearch = require('./bandintown-request');
+var omdbSearch = require('./omdb-request');
 
 let welcomeMessage = "I am an app that will fetch you song, concert and movie data.  I can also fetch random data.  Use these commands: \n\n" +
     "concert-this 'artist/band name here' \n" +
@@ -44,11 +45,19 @@ process.stdin.on('data', data=> {
                 spotifySearch(whatToLookup);
                 break
             case (apiToFetch = 'movie-this'):
-                console.log('In Movie This');
+                whatToLookup = whatToLookup.trim().split(" ").join("+");
+                omdbSearch(whatToLookup);
                 break
             case (apiToFetch = 'do-what-it-says'):
                 console.log('In do-what-it-says');
                 break
+            case (apiToFetch = help):
+                //TODO: Get Help to work
+                console.log("Commands: ");
+                console.log("concert-this 'artist/band name here'\n");
+                console.log("spotify-this-song 'song name here'\n");
+                console.log("movie-this 'movie name here'\n");
+                console.log("do-what-it-says for random\n");
             default:
                 console.log('Sorry I dont know that command.  Try again');
                 //console.log(userAction);
@@ -60,23 +69,12 @@ process.stdin.on('data', data=> {
         console.log("Try again.");
 
     }
-    //console.log(userAction);
-
-    //console.log(userResponse.split(" "));
-    
-
-
 });
 
 
-//TODO: add separate file to control bandsintown
-//TODO: add separate file to control OMDB
-//TODO: Connect each file with the liri.js
-//TODO: make a call to spotify - make function
-//TODO: Connect call to switch and pass info and return info
-//TODO:  do the same for bandsintown and omdb - make function
+
 //TODO: Fill random with random fetches.
 //TODO: pull a random from the file
 //TODO: let the random call the correct function
-//TODO: once completed function should ask the next question
-//TODO: Allow the user to exit.
+
+
