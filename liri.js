@@ -1,8 +1,9 @@
 require("dotenv").config();
 var spotifySearch = require('./spotify-request');
+var bandsInTownSearch = require('./bandintown-request');
 
 let welcomeMessage = "I am an app that will fetch you song, concert and movie data.  I can also fetch random data.  Use these commands: \n\n" +
-    "concert-this then artist/band name here \n" +
+    "concert-this 'artist/band name here' \n" +
     "spotify-this-song 'song name here'\n" +
     "movie-this 'movie name here'\n"+
     "do-what-it-says for random \n";
@@ -36,10 +37,11 @@ process.stdin.on('data', data=> {
     if(apiToFetch) {
         switch (apiToFetch) {
             case (apiToFetch = 'concert-this'):
-                console.log('In Concert This');
+                whatToLookup = whatToLookup.trim().split(" ").join("+");
+                bandsInTownSearch(whatToLookup);
                 break
             case (apiToFetch = 'spotify-this-song'):
-                spotifySearch(whatToLookup,);
+                spotifySearch(whatToLookup);
                 break
             case (apiToFetch = 'movie-this'):
                 console.log('In Movie This');
@@ -67,7 +69,6 @@ process.stdin.on('data', data=> {
 });
 
 
-//TODO: add seprate file to control spotify api call
 //TODO: add separate file to control bandsintown
 //TODO: add separate file to control OMDB
 //TODO: Connect each file with the liri.js
