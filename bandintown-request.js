@@ -18,7 +18,7 @@ function bandsInTown(artist){
                 }
                 console.log("\nWhat would you like me to look up next?");
             }else{
-                console.log(`\nSorry there are no concerts scheduled.`);
+                console.log(`\nSorry there are no concerts scheduled for ${artist}`);
                 console.log("\nWhat would you like me to look up next?");
             }
         })

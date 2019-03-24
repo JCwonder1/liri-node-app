@@ -20,11 +20,11 @@ function spotifySearch(userSong){
                 console.log("Song: ",response.tracks.items[i].name);
                 console.log("Album: ", response.tracks.items[i].album.name);
                 console.log("Release Date: ", response.tracks.items[i].album.release_date);
-                console.log("Preview: ",response.tracks.items[i].preview_url);
+                (response.tracks.items[i].preview_url) ? console.log("Preview: ",response.tracks.items[i].preview_url) : console.log("No Preview available.");
                 console.log("\n------------\n");
 
             }
-            console.log("\nWhat would you like me to fetch next?");
+            console.log("\nWhat would you like me to look up next?");
         })
         .catch(function(err) {
             console.log(err);
