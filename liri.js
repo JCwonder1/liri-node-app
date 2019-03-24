@@ -2,6 +2,7 @@ require("dotenv").config();
 var spotifySearch = require('./spotify-request');
 var bandsInTownSearch = require('./bandintown-request');
 var omdbSearch = require('./omdb-request');
+var randomSearch = require('./random');
 
 let welcomeMessage = "I am an app that will fetch you song, concert and movie data.  I can also fetch random data.  Use these commands: \n\n" +
     "concert-this 'artist/band name here' \n" +
@@ -22,7 +23,6 @@ console.log(welcomeMessage);
 
 process.stdin.on('data', data=> {
     userResponse = data.toString().toLocaleLowerCase().trim();
-
     //Deconstruct the user response to pull out the call to action
     let whatToLookup = userResponse.indexOf(' ') >=0 ? userResponse.substr(userResponse.indexOf(' ')) : false;
 
@@ -32,6 +32,10 @@ process.stdin.on('data', data=> {
                        apiToFetch = userResponse.substr(0,userResponse.indexOf(' '))
     }else if(whatToLookup === false && userResponse === "exit"){
         process.exit()
+    }else if(userResponse === "do-what-it-says"){
+        apiToFetch = userResponse;
+    }else if(userResponse ==="help"){
+        apiToFetch = "help";
     }
 
 
@@ -49,15 +53,17 @@ process.stdin.on('data', data=> {
                 omdbSearch(whatToLookup);
                 break
             case (apiToFetch = 'do-what-it-says'):
-                console.log('In do-what-it-says');
+                randomSearch();
                 break
-            case (apiToFetch = help):
+            case (apiToFetch = "help"):
                 //TODO: Get Help to work
                 console.log("Commands: ");
-                console.log("concert-this 'artist/band name here'\n");
-                console.log("spotify-this-song 'song name here'\n");
-                console.log("movie-this 'movie name here'\n");
-                console.log("do-what-it-says for random\n");
+                console.log("concert-this 'artist/band name here'");
+                console.log("spotify-this-song 'song name here'");
+                console.log("movie-this 'movie name here'");
+                console.log("do-what-it-says for random");
+                console.log("exit to end program");
+                break
             default:
                 console.log('Sorry I dont know that command.  Try again');
                 //console.log(userAction);

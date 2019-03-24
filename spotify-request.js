@@ -30,7 +30,6 @@ function spotifySearch(userSong){
             console.log(err);
         });
 
-    console.log("Im At the end of the function");
 }
 module.exports = spotifySearch;
 
