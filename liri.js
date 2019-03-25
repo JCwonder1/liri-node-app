@@ -4,7 +4,7 @@ var bandsInTownSearch = require('./bandintown-request');
 var omdbSearch = require('./omdb-request');
 var randomSearch = require('./random');
 
-let welcomeMessage = "I am an app that will fetch you song, concert and movie data.  I can also fetch random data.  Use these commands: \n\n" +
+let welcomeMessage = "\nI am an app that will find you song, concert and movie data.  \nI can also serve random data.  \n\nUse these commands: \n\n" +
     "concert-this 'artist/band name here' \n" +
     "spotify-this-song 'song name here'\n" +
     "movie-this 'movie name here'\n"+
